@@ -1,0 +1,60 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="dark">
+    <ion-title>
+      {{ isEditing ? 'Editar Usuario' : 'Agregar Usuario' }}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" color="dark">
+  <ion-card-header>
+    <ion-card-title color="light">
+      {{ isEditing ? 'Editar Usuario' : 'Agregar Usuario' }}
+    </ion-card-title>
+  </ion-card-header>
+
+  <!-- Formulario -->
+  <ion-item color="dark">
+    <ion-label position="floating">Nombre</ion-label>
+    <ion-input [(ngModel)]="newUser.nombre" name="nombre"></ion-input>
+  </ion-item>
+
+  <ion-item color="dark">
+    <ion-label position="floating">Correo</ion-label>
+    <ion-input [(ngModel)]="newUser.correo" name="correo" type="email"></ion-input>
+  </ion-item>
+
+  <!-- Botones de acción -->
+  <div class="ion-padding">
+    <ion-button *ngIf="!isEditing" expand="full" (click)="createUser()" color="success">
+      GUARDAR
+    </ion-button>
+
+    <div *ngIf="isEditing" class="ion-margin-top">
+      <ion-button expand="full" (click)="updateUser()" color="primary">
+        ACTUALIZAR
+      </ion-button>
+      <ion-button expand="full" (click)="cancelEdit()" color="medium" class="ion-margin-top">
+        CANCELAR
+      </ion-button>
+    </div>
+  </div>
+
+  <!-- Lista de usuarios -->
+  <ion-list>
+    <ion-item *ngFor="let user of users" color="dark">
+      <ion-label>
+        <h2>Nombre: {{ user.nombre }}</h2>
+        <p>Correo: {{ user.correo }}</p>
+      </ion-label>
+      <ion-buttons slot="end">
+        <ion-button color="primary" (click)="editUser(user)">
+          <ion-icon slot="icon-only" name="pencil-outline"></ion-icon>
+        </ion-button>
+        <ion-button color="danger" (click)="deleteUser(user)">
+          <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-item>
+  </ion-list>
+</ion-content>
